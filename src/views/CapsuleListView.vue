@@ -20,6 +20,7 @@ onMounted(fetchCapsules)
 <template>
   <div>
     <h1>내 캡슐 목록</h1>
+    <RouterLink to="/capsules/create">새 캡슐 만들기</RouterLink>
 
     <button @click="changeStatus()">전체</button>
     <button @click="changeStatus('OPENED')">열린 캡슐</button>
