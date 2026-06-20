@@ -29,3 +29,17 @@ export const createCapsule = async (request: CapsuleCreateRequest) => {
   const response = await api.post('/api/capsules', request)
   return response.data
 }
+
+export interface CapsuleDetail {
+  id: number
+  title: string
+  content: string
+  openAt: string
+  createdAt: string
+  updatedAt: string | null
+}
+
+export const getCapsule = async (capsuleId: number) => {
+  const response = await api.get<CapsuleDetail>(`/api/capsules/${capsuleId}`)
+  return response.data
+}

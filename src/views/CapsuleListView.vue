@@ -28,7 +28,9 @@ onMounted(fetchCapsules)
 
     <ul>
       <li v-for="capsule in capsules" :key="capsule.id">
-        {{ capsule.title }} / {{ capsule.openAt }}
+        <RouterLink :to="`/capsules/${capsule.id}`">
+          {{ capsule.title }} / {{ capsule.openAt }}
+        </RouterLink>
       </li>
     </ul>
   </div>
