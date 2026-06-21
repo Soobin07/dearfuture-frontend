@@ -43,3 +43,21 @@ export const getCapsule = async (capsuleId: number) => {
   const response = await api.get<CapsuleDetail>(`/api/capsules/${capsuleId}`)
   return response.data
 }
+
+export const deleteCapsule = async (capsuleId: number) => {
+  await api.delete(`/api/capsules/${capsuleId}`)
+}
+
+export interface CapsuleUpdateRequest {
+  title: string
+  content: string
+  openAt: string
+}
+
+export const updateCapsule = async (
+  capsuleId: number,
+  request: CapsuleUpdateRequest,
+) => {
+  const response = await api.put(`/api/capsules/${capsuleId}`, request)
+  return response.data
+}

@@ -3,6 +3,7 @@ import LoginView from '@/views/LoginView.vue'
 import CapsuleListView from '@/views/CapsuleListView.vue'
 import CapsuleCreateView from '@/views/CapsuleCreateView.vue'
 import CapsuleDetailView from '@/views/CapsuleDetailView.vue'
+import CapsuleEditView from '@/views/CapsuleEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,10 @@ const router = createRouter({
     {
       path: '/capsules/:capsuleId',
       component: CapsuleDetailView,
+    },
+    {
+      path: '/capsules/:capsuleId/edit',
+      component: CapsuleEditView,
     },
   ],
 })
