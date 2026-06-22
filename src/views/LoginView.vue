@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { RouterLink } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
@@ -28,5 +29,8 @@ const handleLogin = async () => {
     <input v-model="password" type="password" placeholder="비밀번호" />
 
     <button @click="handleLogin">로그인</button>
+    <RouterLink to="/signup">
+      회원가입
+    </RouterLink>
   </div>
 </template>
