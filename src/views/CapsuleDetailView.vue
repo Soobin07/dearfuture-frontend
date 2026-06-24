@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getCapsule, type CapsuleDetail } from '@/api/capsuleApi'
 import { deleteCapsule } from '@/api/capsuleApi'
+import { formatDateTime } from '@/utils/date'
 
 const route = useRoute()
 const router = useRouter()
@@ -54,9 +55,11 @@ onMounted(fetchCapsule)
       <button @click="router.push(`/capsules/${capsule.id}/edit`)">수정</button>
       <hr />
 
-      <p>공개일: {{ capsule.openAt }}</p>
-      <p>생성일: {{ capsule.createdAt }}</p>
-      <p v-if="capsule.updatedAt">수정일: {{ capsule.updatedAt }}</p>
+      <p>공개일: {{ formatDateTime(capsule.openAt) }}</p>
+      <p>생성일: {{ formatDateTime(capsule.createdAt) }}</p>
+      <p v-if="capsule.updatedAt">
+        수정일: {{ formatDateTime(capsule.updatedAt) }}
+      </p>
     </div>
   </div>
 </template>
