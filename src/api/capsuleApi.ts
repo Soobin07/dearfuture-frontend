@@ -9,10 +9,26 @@ export interface CapsuleListItem {
   createdAt: string
 }
 
-export const getCapsules = async (status?: CapsuleStatus) => {
-  const response = await api.get<CapsuleListItem[]>('/api/capsules', {
+export interface PageResponse<T> {
+  content: T[]
+  page: number
+  size: number
+  totalElements: number
+  totalPages: number
+  first: boolean
+  last: boolean
+}
+
+export const getCapsules = async (
+  status?: CapsuleStatus,
+    page = 0,
+    size = 10
+) => {
+  const response = await api.get<PageResponse<CapsuleListItem>>('/api/capsules', {
     params: {
       status,
+      page,
+      size,
     },
   })
 
@@ -54,6 +70,7 @@ export interface CapsuleUpdateRequest {
   openAt: string
 }
 
+
 export const updateCapsule = async (
   capsuleId: number,
   request: CapsuleUpdateRequest,
@@ -61,3 +78,4 @@ export const updateCapsule = async (
   const response = await api.put(`/api/capsules/${capsuleId}`, request)
   return response.data
 }
+

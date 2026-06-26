@@ -1,19 +1,53 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { getCapsules, type CapsuleListItem, type CapsuleStatus } from '@/api/capsuleApi'
+import {
+  getCapsules,
+  type CapsuleListItem,
+  type CapsuleStatus,
+  type PageResponse,
+} from '@/api/capsuleApi'
 import { RouterLink } from 'vue-router'
 import { formatDateTime } from '@/utils/date'
 
 const capsules = ref<CapsuleListItem[]>([])
 const status = ref<CapsuleStatus | undefined>()
 
+const page = ref(0)
+const pageInfo = ref<PageResponse<CapsuleListItem> | null>(null)
+
 const fetchCapsules = async () => {
-  capsules.value = await getCapsules(status.value)
+  const result = await getCapsules(
+    status.value,
+    page.value,
+    10,
+  )
+
+  pageInfo.value = result
+  capsules.value = result.content
 }
 
 const changeStatus = async (value?: CapsuleStatus) => {
   status.value = value
+  page.value = 0
+
   await fetchCapsules()
+}
+
+const prevPage = async () => {
+  if (page.value > 0) {
+    page.value--
+    await fetchCapsules()
+  }
+}
+
+const nextPage = async () => {
+  if (
+    pageInfo.value &&
+    page.value < pageInfo.value.totalPages - 1
+  ) {
+    page.value++
+    await fetchCapsules()
+  }
 }
 
 onMounted(fetchCapsules)
@@ -84,6 +118,30 @@ onMounted(fetchCapsules)
           생성일: {{ formatDateTime(capsule.createdAt) }}
         </div>
       </RouterLink>
+    </div>
+    <div
+      v-if="pageInfo"
+      class="flex items-center justify-center gap-4 mt-8"
+    >
+      <button
+        class="px-4 py-2 border rounded-lg disabled:opacity-50"
+        :disabled="pageInfo.first"
+        @click="prevPage"
+      >
+        이전
+      </button>
+
+      <span>
+        {{ pageInfo.page + 1 }} / {{ pageInfo.totalPages }}
+      </span>
+
+      <button
+        class="px-4 py-2 border rounded-lg disabled:opacity-50"
+        :disabled="pageInfo.last"
+        @click="nextPage"
+      >
+        다음
+      </button>
     </div>
   </div>
 </template>
