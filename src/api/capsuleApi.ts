@@ -21,12 +21,14 @@ export interface PageResponse<T> {
 
 export const getCapsules = async (
   status?: CapsuleStatus,
-    page = 0,
-    size = 10
+  keyword = '',
+  page = 0,
+  size = 10,
 ) => {
   const response = await api.get<PageResponse<CapsuleListItem>>('/api/capsules', {
     params: {
       status,
+      keyword,
       page,
       size,
     },

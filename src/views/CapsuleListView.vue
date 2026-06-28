@@ -11,6 +11,7 @@ import { formatDateTime } from '@/utils/date'
 
 const capsules = ref<CapsuleListItem[]>([])
 const status = ref<CapsuleStatus | undefined>()
+const keyword = ref('')
 
 const page = ref(0)
 const pageInfo = ref<PageResponse<CapsuleListItem> | null>(null)
@@ -18,12 +19,18 @@ const pageInfo = ref<PageResponse<CapsuleListItem> | null>(null)
 const fetchCapsules = async () => {
   const result = await getCapsules(
     status.value,
+    keyword.value,
     page.value,
     10,
   )
 
   pageInfo.value = result
   capsules.value = result.content
+}
+
+const search = async () => {
+  page.value = 0
+  await fetchCapsules()
 }
 
 const changeStatus = async (value?: CapsuleStatus) => {
@@ -64,6 +71,22 @@ onMounted(fetchCapsules)
       >
         새 캡슐 만들기
       </RouterLink>
+    </div>
+
+    <div class="flex gap-2 mb-6">
+      <input
+        v-model="keyword"
+        placeholder="제목 검색"
+        class="flex-1 border rounded-lg px-4 py-2"
+        @keyup.enter="search"
+      />
+
+      <button
+        class="bg-blue-600 text-white px-4 rounded-lg hover:bg-blue-700"
+        @click="search"
+      >
+        검색
+      </button>
     </div>
 
     <div class="flex gap-2 mb-6">
