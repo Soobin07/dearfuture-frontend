@@ -12,6 +12,7 @@ import { formatDateTime } from '@/utils/date'
 const capsules = ref<CapsuleListItem[]>([])
 const status = ref<CapsuleStatus | undefined>()
 const keyword = ref('')
+const sort = ref('createdAt,desc')
 
 const page = ref(0)
 const pageInfo = ref<PageResponse<CapsuleListItem> | null>(null)
@@ -20,6 +21,7 @@ const fetchCapsules = async () => {
   const result = await getCapsules(
     status.value,
     keyword.value,
+    sort.value,
     page.value,
     10,
   )
@@ -88,6 +90,32 @@ onMounted(fetchCapsules)
         검색
       </button>
     </div>
+
+    <div class="flex items-center gap-2 mb-6">
+  <span>정렬</span>
+
+  <select
+      v-model="sort"
+      class="border rounded-lg px-3 py-2"
+      @change="fetchCapsules"
+    >
+      <option value="createdAt,desc">
+        최신 생성순
+      </option>
+
+      <option value="createdAt,asc">
+        오래된 생성순
+      </option>
+
+      <option value="openAt,asc">
+        공개일 빠른순
+      </option>
+
+      <option value="openAt,desc">
+        공개일 늦은순
+      </option>
+    </select>
+  </div>
 
     <div class="flex gap-2 mb-6">
       <button

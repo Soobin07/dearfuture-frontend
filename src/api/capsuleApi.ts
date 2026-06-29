@@ -22,6 +22,7 @@ export interface PageResponse<T> {
 export const getCapsules = async (
   status?: CapsuleStatus,
   keyword = '',
+  sort = 'createdAt,desc',
   page = 0,
   size = 10,
 ) => {
@@ -29,6 +30,7 @@ export const getCapsules = async (
     params: {
       status,
       keyword,
+      sort,
       page,
       size,
     },
