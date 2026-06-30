@@ -7,7 +7,7 @@ import {
   type PageResponse,
 } from '@/api/capsuleApi'
 import { RouterLink } from 'vue-router'
-import { formatDateTime } from '@/utils/date'
+import { formatDateTime, getDDayText } from '@/utils/date'
 
 const capsules = ref<CapsuleListItem[]>([])
 const status = ref<CapsuleStatus | undefined>()
@@ -157,9 +157,15 @@ onMounted(fetchCapsules)
         :to="`/capsules/${capsule.id}`"
         class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition"
       >
-        <h2 class="text-xl font-semibold mb-2">
-          {{ capsule.title }}
-        </h2>
+        <div class="flex items-start justify-between gap-4">
+          <h2 class="text-xl font-semibold mb-2">
+            {{ capsule.title }}
+          </h2>
+
+          <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+            {{ getDDayText(capsule.openAt) }}
+          </span>
+        </div>
 
         <div class="text-sm text-gray-500">
           공개일: {{ formatDateTime(capsule.openAt) }}
