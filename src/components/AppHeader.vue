@@ -26,6 +26,12 @@ const handleLogout = () => {
       <nav class="flex gap-4">
         <button
           class="hover:text-blue-600"
+          @click="router.push('/me')"
+        >
+          마이페이지
+        </button>
+        <button
+          class="hover:text-blue-600"
           @click="router.push('/capsules')"
         >
           캡슐 목록

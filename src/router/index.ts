@@ -6,6 +6,8 @@ import CapsuleDetailView from '@/views/CapsuleDetailView.vue'
 import CapsuleEditView from '@/views/CapsuleEditView.vue'
 import SignupView from '@/views/SignupView.vue'
 import { useAuthStore } from '@/stores/auth'
+import MeView from '@/views/MeView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +39,10 @@ const router = createRouter({
     {
       path: '/signup',
       component: SignupView,
+    },
+    {
+      path: '/me',
+      component: MeView,
     },
   ],
 })
